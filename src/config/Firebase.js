@@ -1,4 +1,5 @@
 import firebase from "firebase";
+
 const config = {
   apiKey: "AIzaSyDo2iUVv-ehy3WDXF0RvF8nc6M609Zocgc",
   authDomain: "to-do-list-a3c93.firebaseapp.com",
@@ -9,5 +10,9 @@ const config = {
   appId: "1:254079278859:web:b9b87f29a313664914cc0e",
   measurementId: "G-VSXCPTWDNZ",
 };
+
 const fire = firebase.initializeApp(config);
+
+export const database = firebase.database();
+
 export default fire;

@@ -16,24 +16,18 @@ class Authentication extends Component {
 
   handleAuthentication = () => {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
       if (user) {
         const username = user.displayName;
         this.setState({ user, username: username });
-
-        // alert("Welcome, " + username);
       } else {
         this.setState({ user: null });
-        // localStorage.removeItem("user");
       }
     });
   };
 
   render() {
-    console.log(this.state.user);
-
     return (
-      <div>
+      <div style={{ height: "100%" }}>
         {this.state.user ? <Home username={this.state.username} /> : <Entry />}
       </div>
     );

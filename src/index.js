@@ -7,9 +7,9 @@ import Authentication from "./components/Authentication";
 
 const App = () => {
   return (
-    <>
+    <div style={{ height: "100%" }}>
       <Authentication />
-    </>
+    </div>
   );
 };
 

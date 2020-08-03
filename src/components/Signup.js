@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserAuthenticationLayout from "./UserAuthenticationLayout";
-import fire from "../config/Firebase";
+
+import fire, { database } from "../config/Firebase";
 
 import "./Authentication.css";
 
@@ -20,6 +21,13 @@ class Signup extends Component {
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  writeUserData = (userId, name, email) => {
+    database.ref("users/" + userId).set({
+      username: name,
+      email: email,
+    });
   };
 
   handleBlur = () => {
@@ -45,6 +53,12 @@ class Signup extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((result) => {
+        let user = result.user;
+
+        console.log(user);
+
+        this.writeUserData(user.uid, this.state.name, user.email);
+
         return result.user.updateProfile({
           displayName: this.state.name,
         });
