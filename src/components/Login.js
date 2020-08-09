@@ -101,7 +101,7 @@ class Login extends Component {
               Log in
             </div>
 
-            <p id="create-one">Don't have one yet?</p>
+            <p id="create-one">Don't have an account yet?</p>
 
             <div
               id="create-account-button"

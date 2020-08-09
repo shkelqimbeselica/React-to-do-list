@@ -9,7 +9,7 @@ class CreateBoard extends Component {
   render() {
     return (
       <div className={style.round} onClick={this.props.addBoard}>
-        Krijo nje lsite
+        Krijo nje liste
       </div>
     );
   }
