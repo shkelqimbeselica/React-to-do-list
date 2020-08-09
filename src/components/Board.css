@@ -1,0 +1,39 @@
+#task-input {
+  width: 40px;
+  /* max-width: 40px; */
+  padding: 5px;
+  -webkit-transition: width 250ms ease-in-out;
+  -moz-transition: width 250ms ease-in-out;
+  -o-transition: width 250ms ease-in-out;
+  transition: width 250ms ease-in-out;
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  border: 1px solid #245942;
+  background-color: #245942;
+  color: white;
+  border-radius: 25px;
+  padding-left: 16px;
+  outline: none;
+  z-index: 1;
+  overflow: hidden;
+  /* display: none; */
+}
+::placeholder {
+  color: white;
+}
+
+.expandedInput {
+  display: inline-block !important;
+  width: 300px !important;
+
+  /* max-width: 300px !important; */
+  opacity: 1 !important;
+}
+
+.expandedButton {
+  transform: rotate(-45deg);
+  transition: all 250ms ease-in-out;
+}
+
+/* #cce8ce */

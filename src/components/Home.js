@@ -1,26 +1,31 @@
 import React, { Component } from "react";
-import fire, { database } from "../config/Firebase";
 import Board from "../components/Board";
+import Avatar from "../components/Avatar";
+import Modal from "../components/Modal";
 import CreateBoard from "./CreateBoard";
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(this);
 
-    this.state = { boards: [0] };
+    this.state = { boards: [0], showModal: false };
     this.boardsRef = React.createRef();
-  }
-
-  logout() {
-    fire.auth().signOut();
+    this.containerRef = React.createRef();
   }
 
   addBoard = () => {
+    this.setState({ showModal: true }, () => {
+      this.containerRef.current.style.filter = "blur(8px)";
+    });
+  };
+
+  handleModalClick = (title) => {
+    this.containerRef.current.style.filter = "blur(0px)";
     this.setState(
       (prevState) => ({
         boards: [...prevState.boards, parseInt(prevState.boards) + 1],
-        // display: "inline-flex",
+        showModal: false,
+        boardTitle: title,
       }),
       () => {
         this.boardsRef.current.lastChild.scrollIntoView({
@@ -35,34 +40,30 @@ class Home extends Component {
   render() {
     return (
       <div style={{ height: "100%" }}>
-        <div style={style.container}>
+        <div
+          style={style.container}
+          className="exclude-modal"
+          ref={this.containerRef}
+        >
           <header style={style.header}>
-            {this.props.username !== null && (
-              <h1>Welcome {this.props.username}</h1>
-            )}
-            <button onClick={this.logout} style={style.button}>
-              Log Out
-            </button>
+            <Avatar username={this.props.username} />
           </header>
           <div
-            className="boards"
-            ref={this.boardsRef}
-            style={{
-              height: "100vh",
-              margin: "auto",
-              display: "flex",
-              alignItems: "center",
-              overflowX: "auto",
-              whiteSpace: "nowrap",
-              width: "100%",
-            }}
+            className="static"
+            style={{ height: "80px", display: "flex", alignItems: "center" }}
           >
-            {this.state.boards.map((board) => {
-              return <Board />;
-            })}
             <CreateBoard addBoard={this.addBoard} />
           </div>
+
+          <div className="boards" ref={this.boardsRef} style={style.boards}>
+            {this.state.boards.map((board) => {
+              return <Board title={this.state.boardTitle} />;
+            })}
+          </div>
         </div>
+        {this.state.showModal ? (
+          <Modal handleModalClick={this.handleModalClick} />
+        ) : null}
       </div>
     );
   }
@@ -73,16 +74,35 @@ const style = {
     height: "100%",
   },
   header: {
-    // display: "flex",
-    // justifyContent: "space-between",
     width: "100%",
-    position: "absolute",
-    top: 0,
+    display: "flex",
+    justifyContent: "flex-end",
+    borderBottom: "1px solid black",
+    height: "64px",
   },
   button: {
     position: "absolute",
     right: 0,
     top: 0,
+  },
+  avatar: {
+    display: "flex",
+    alignItems: "center",
+  },
+  img: {
+    height: "32px",
+    width: "32px",
+    borderRadius: "50%",
+    border: "1px solid black",
+  },
+  boards: {
+    height: "calc(100vh - 146px)",
+    margin: "auto",
+    display: "flex",
+    alignItems: "center",
+    overflowX: "auto",
+    whiteSpace: "nowrap",
+    width: "100%",
   },
 };
 

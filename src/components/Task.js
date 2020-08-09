@@ -37,7 +37,7 @@ const style = {
     display: "flex",
     alignItems: "center",
     borderRadius: "5px",
-    backgroundColor: "rgba(5, 196, 107, 0.3)",
+    backgroundColor: "rgba(190, 237, 217, 0.3)",
     marginTop: "8px",
     // boxShadow: "0 1px 0 rgba(9,30,66,.25)",
   },

@@ -10,12 +10,20 @@
   src: url("/Font/Source Sans Pro/SourceSansPro-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Source Sans Pro Bold";
+  font-style: normal;
+  src: url("/Font/Source Sans Pro/SourceSansPro-Bold.ttf");
+}
+
 html,
 body {
   scroll-behavior: smooth;
-  background-color: #c7d9ad;
+  background-color: #beedd9;
   height: 100%;
-  width: 100%;
+  /* width: 100%; */
+  max-width: 1280px;
+  margin: auto;
   font-family: "Source Sans Pro";
 }
 
