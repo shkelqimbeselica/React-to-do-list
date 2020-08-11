@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Board from "../components/Board";
-import Avatar from "../components/Avatar";
+import Header from "../components/Header";
 import Modal from "../components/Modal";
 import CreateBoard from "./CreateBoard";
 
@@ -19,22 +19,27 @@ class Home extends Component {
     });
   };
 
-  handleModalClick = (title) => {
+  handleModalClick = (obj) => {
     this.containerRef.current.style.filter = "blur(0px)";
-    this.setState(
-      (prevState) => ({
-        boards: [...prevState.boards, parseInt(prevState.boards) + 1],
-        showModal: false,
-        boardTitle: title,
-      }),
-      () => {
-        this.boardsRef.current.lastChild.scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-          inline: "nearest",
-        });
-      }
-    );
+
+    if (obj.action === "create") {
+      this.setState(
+        (prevState) => ({
+          boards: [...prevState.boards, parseInt(prevState.boards) + 1],
+          showModal: false,
+          boardTitle: obj.value,
+        }),
+        () => {
+          this.boardsRef.current.lastChild.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "nearest",
+          });
+        }
+      );
+    } else {
+      this.setState({ showModal: false });
+    }
   };
 
   render() {
@@ -45,13 +50,9 @@ class Home extends Component {
           className="exclude-modal"
           ref={this.containerRef}
         >
-          <header style={style.header}>
-            <Avatar username={this.props.username} />
-          </header>
-          <div
-            className="static"
-            style={{ height: "80px", display: "flex", alignItems: "center" }}
-          >
+          <Header username={this.props.username} />
+          <div className="static" style={style.static}>
+            <h3 style={style.currentLists}>Current lists</h3>
             <CreateBoard addBoard={this.addBoard} />
           </div>
 
@@ -73,12 +74,17 @@ const style = {
   container: {
     height: "100%",
   },
-  header: {
-    width: "100%",
+  static: {
+    height: "92px",
     display: "flex",
-    justifyContent: "flex-end",
-    borderBottom: "1px solid black",
-    height: "64px",
+    alignItems: "center",
+    width: "calc(100% - 80px)",
+    margin: "auto",
+  },
+  currentLists: {
+    color: "#2F313D",
+    fontFamily: "Source Sans Pro Bold",
+    fontSize: "32px",
   },
   button: {
     position: "absolute",
@@ -99,7 +105,7 @@ const style = {
     height: "calc(100vh - 146px)",
     margin: "auto",
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     overflowX: "auto",
     whiteSpace: "nowrap",
     width: "100%",

@@ -1,33 +1,30 @@
 #task-input {
-  width: 40px;
-  /* max-width: 40px; */
+  width: 10px;
   padding: 5px;
-  -webkit-transition: width 250ms ease-in-out;
-  -moz-transition: width 250ms ease-in-out;
-  -o-transition: width 250ms ease-in-out;
   transition: width 250ms ease-in-out;
   position: absolute;
-  right: 0px;
+  right: 26px;
+  bottom: 0;
   height: 100%;
-  border: 1px solid #245942;
-  background-color: #245942;
+  border: 1px solid #7482d3;
+  background-color: #7482d3;
   color: white;
-  border-radius: 25px;
+  border-radius: 35px 12px 12px 35px;
   padding-left: 16px;
   outline: none;
   z-index: 1;
   overflow: hidden;
+  font-size: 20px;
   /* display: none; */
 }
-::placeholder {
+#task-input::placeholder {
   color: white;
 }
 
 .expandedInput {
   display: inline-block !important;
-  width: 300px !important;
-
-  /* max-width: 300px !important; */
+  /* width: 440px !important; */
+  width: calc(100% - 26px) !important;
   opacity: 1 !important;
 }
 

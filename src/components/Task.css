@@ -1,0 +1,4 @@
+.new-task-added {
+  left: 0 !important;
+  transition: 400ms ease-in-out;
+}
