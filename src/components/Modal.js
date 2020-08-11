@@ -5,6 +5,12 @@ class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
+
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
   }
 
   render() {
@@ -18,6 +24,7 @@ class Modal extends Component {
             </p>
           </div>
           <input
+            ref={this.inputRef}
             placeholder="Name of list"
             style={style.input}
             value={this.state.value}

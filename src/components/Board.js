@@ -44,24 +44,19 @@ class Board extends Component {
   };
 
   removeTask = (target) => {
-    console.log(target);
+    if (!target.classList.contains("done")) {
+      this.checked(true);
+    }
+
+    let tasks = this.state.tasks;
     let inputVal = target.children[1].textContent;
-    console.log(inputVal);
 
-    // var array = [...this.state.tasks]; // make a separate copy of the array
-    // var index = array.indexOf(e.target.value);
-    // if (index !== -1) {
-    //   array.splice(index, 1);
-    //   this.setState({ people: array });
-    // }
-
-    // this.setState((prevState) => {
-    //   return {
-    //     task: "",
-    //     tasks: prevState.tasks.concat(newItem),
-    //     remainingTasks: prevState.remainingTasks + 1,
-    //   };
-    // });
+    var array = [...this.state.tasks]; // make a separate copy of the array
+    let index = tasks.findIndex((x) => x.text === inputVal);
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ tasks: array });
+    }
   };
 
   checked = (bool) => {

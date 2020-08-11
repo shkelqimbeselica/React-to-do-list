@@ -102,13 +102,13 @@ const style = {
     border: "1px solid black",
   },
   boards: {
-    height: "calc(100vh - 146px)",
+    height: "calc(100vh - 174px)",
+    width: "calc(100% - 32px)",
     margin: "auto",
     display: "flex",
     alignItems: "flex-start",
     overflowX: "auto",
     whiteSpace: "nowrap",
-    width: "100%",
   },
 };
 

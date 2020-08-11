@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from "react-sortable-hoc";
+
+import Checkbox from "./Checkbox";
 import "./Task.css";
 
 class Task extends Component {
@@ -7,18 +14,22 @@ class Task extends Component {
     this.state = { dropdown: false };
 
     this.taskRef = React.createRef();
+    this.lineRef = React.createRef();
   }
 
   handleCheckboxChange = (e) => {
     let target = e.target;
+    let line = this.lineRef.current;
 
     const task = target.closest(".task");
     if (target.checked) {
       task.style.backgroundColor = "transparent";
-      task.style.textDecoration = "line-through";
+      task.classList.add("done");
+      line.classList.add("line-full");
     } else {
       task.style.backgroundColor = "#F0F1FA";
-      task.style.textDecoration = "none";
+      line.classList.remove("line-full");
+      task.classList.remove("done");
     }
 
     this.props.checked(e.target.checked);
@@ -34,30 +45,43 @@ class Task extends Component {
     });
   }
 
-  componentWillUnmount() {
-    let task = this.taskRef.current;
-    task.classList.remove("new-task-added");
-  }
-
   handleDropdown = (e) => {
     this.setState({ dropdown: !this.state.dropdown });
   };
 
   deleteTask = (e) => {
-    this.props.unmountComponent(this.taskRef.current);
+    let task = this.taskRef.current;
+    task.classList.remove("new-task-added");
+    setTimeout(() => {
+      this.props.unmountComponent(this.taskRef.current);
+    }, 400);
+  };
+
+  pinTask = (e) => {
+    console.log(e);
   };
 
   render() {
     let dropdown = (
       <div style={style.dropdown}>
         <div onClick={this.deleteTask}>Delete</div>
+        <div onClick={this.pinTask}>Pin</div>
       </div>
     );
 
     return (
       <div className="task" style={style.main} ref={this.taskRef}>
-        <input type="checkbox" onChange={this.handleCheckboxChange} />
+        {/* <input type="checkbox" onChange={this.handleCheckboxChange} /> */}
+
+        <Checkbox
+          checked={this.state.checked}
+          onChange={this.handleCheckboxChange}
+        />
+
         <div className="title" style={style.title}>
+          <div className="fill-line-through">
+            <div className="line" ref={this.lineRef}></div>
+          </div>
           {this.props.title}
         </div>
         <div
@@ -99,14 +123,17 @@ const style = {
     left: "-500px",
     display: "flex",
     alignItems: "center",
-    borderRadius: "5px",
-    border: "1px solid #E6E7F0",
-    backgroundColor: "#F0F1FA",
+    borderRadius: "8px",
+    border: "1px solid rgb(240, 241, 250)",
+    backgroundColor: "rgb(240, 241, 250)",
     marginBottom: "16px",
+    transition: "400ms ease-in-out",
+
     // boxShadow: "0 1px 0 rgba(9,30,66,.25)",
   },
   title: {
     marginLeft: "16px",
+    position: "relative",
   },
   moreOptions: {
     display: "flex",
@@ -115,14 +142,15 @@ const style = {
     position: "relative",
   },
   dropdown: {
-    backgroundColor: "#FFF",
-    width: "100px",
-    height: "150px",
+    backgroundColor: "rgb(240, 241, 250)",
+    width: "70px",
+    height: "110px",
     position: "absolute",
     top: "25px",
     right: 0,
-    border: "1px solid black",
+    border: "2px solid #FFF",
     borderRadius: "8px",
+    zIndex: 2,
   },
 };
 

@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from "react-sortable-hoc";
+
 import Task from "./Task";
 import styles from "./Board.module.css";
 
 class Tasks extends Component {
-  unmountComponent = (t) => {
-    this.props.unmountComponent(t);
+  unmountComponent = (task) => {
+    this.props.unmountComponent(task);
   };
 
   render() {
@@ -15,6 +20,7 @@ class Tasks extends Component {
         <Task
           key={task.key}
           unmountComponent={this.unmountComponent}
+          checked={this.props.checked}
           title={task.text}
         />
       );
