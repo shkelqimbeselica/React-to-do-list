@@ -12,13 +12,14 @@ const Header = (props) => {
 const style = {
   header: {
     width: "calc(100% - 16px)",
-    margin: "8px auto 0 auto",
+    margin: "0 auto",
     display: "flex",
     justifyContent: "flex-end",
-    // borderBottom: "1px solid black",
     height: "82px",
     backgroundColor: "#FFF",
     borderRadius: "8px",
+    position: "relative",
+    top: "8px",
   },
 };
 

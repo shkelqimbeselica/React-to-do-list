@@ -25,6 +25,7 @@ class Tasks extends Component {
     userSelect: "none",
     // padding: this.grid * 2,
     margin: `0 0 ${this.grid * 2}px 0`,
+    transform: isDragging ? "rotate(7deg)" : "none",
 
     // change background colour if dragging
     // background: isDragging ? "lightgreen" : "grey",
@@ -34,9 +35,7 @@ class Tasks extends Component {
   });
 
   checked = (obj) => {
-    console.log(obj.target.closest(".task"));
-
-    this.props.checked(obj.checked);
+    this.props.checked(obj);
   };
 
   render() {

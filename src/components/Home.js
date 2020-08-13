@@ -56,16 +56,18 @@ class Home extends Component {
             <CreateBoard addBoard={this.addBoard} />
           </div>
 
-          <div className="boards" ref={this.boardsRef} style={style.boards}>
-            {this.state.boards.map((board, index) => {
-              return (
-                <Board
-                  key={index}
-                  title={this.state.boardTitle}
-                  id={Date.now()}
-                />
-              );
-            })}
+          <div className="scrollable">
+            <div className="boards" ref={this.boardsRef} style={style.boards}>
+              {this.state.boards.map((board, index) => {
+                return (
+                  <Board
+                    key={index}
+                    title={this.state.boardTitle}
+                    id={Date.now()}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         {this.state.showModal ? (
@@ -86,6 +88,7 @@ const style = {
     alignItems: "center",
     width: "calc(100% - 80px)",
     margin: "auto",
+    marginTop: "8px",
   },
   currentLists: {
     color: "#2F313D",
@@ -113,7 +116,7 @@ const style = {
     margin: "auto",
     display: "flex",
     alignItems: "flex-start",
-    overflowX: "auto",
+    overflowX: "scroll",
     whiteSpace: "nowrap",
   },
 };

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Draggable } from "react-beautiful-dnd";
 
 import Checkbox from "./Checkbox";
 import "./Task.css";
@@ -29,7 +28,7 @@ class Task extends Component {
       task.classList.remove("done");
     }
 
-    this.props.checked({ checked: e.target.checked, target: e.target });
+    this.props.checked({ checked: e.target.checked, target: e.currentTarget });
   };
 
   componentDidMount() {
@@ -127,7 +126,7 @@ const style = {
     borderRadius: "8px",
     border: "1px solid rgb(240, 241, 250)",
     backgroundColor: "rgb(240, 241, 250)",
-    marginBottom: "16px",
+    // margin: "8px 0",
     transition: "400ms ease-in-out",
 
     // boxShadow: "0 1px 0 rgba(9,30,66,.25)",
