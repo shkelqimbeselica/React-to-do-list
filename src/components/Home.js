@@ -57,8 +57,14 @@ class Home extends Component {
           </div>
 
           <div className="boards" ref={this.boardsRef} style={style.boards}>
-            {this.state.boards.map((board) => {
-              return <Board title={this.state.boardTitle} />;
+            {this.state.boards.map((board, index) => {
+              return (
+                <Board
+                  key={index}
+                  title={this.state.boardTitle}
+                  id={Date.now()}
+                />
+              );
             })}
           </div>
         </div>

@@ -61,6 +61,16 @@
 } */
 
 .taskHolder {
+  /* padding: 16px 20px;
+  padding-right: 10px;
+  overflow-y: scroll;
+  width: auto;
+  height: 85%;
+  white-space: nowrap; */
+}
+
+[data-rbd-droppable-id="droppable"] {
+  overflow-anchor: none;
   padding: 16px 20px;
   padding-right: 10px;
   overflow-y: scroll;

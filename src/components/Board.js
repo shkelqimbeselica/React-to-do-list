@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { Tasks } from "./Tasks";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import Tasks from "./Tasks";
 import RemainingTasks from "./RemainingTasks";
 import Plus from "./Plus";
 import style from "./Board.module.css";
@@ -32,14 +31,12 @@ class Board extends Component {
       let newItem = {
         text: e.target.value,
         key: Date.now(),
-        checked: this.props.checked,
-        id: this.state.id + 1,
+        id: Date.now(),
       };
 
       this.setState((prevState) => {
         return {
           task: "",
-          id: prevState.id + 1,
           tasks: prevState.tasks.concat(newItem),
           remainingTasks: prevState.remainingTasks + 1,
         };
@@ -91,6 +88,33 @@ class Board extends Component {
     input.classList.toggle("expandedInput");
   };
 
+  reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  onDragEnd = (result) => {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    const tasks = this.reorder(
+      this.state.tasks,
+      result.source.index,
+      result.destination.index
+    );
+
+    console.log(result);
+
+    this.setState({
+      tasks,
+    });
+  };
+
   render() {
     return (
       <div className={style.root}>
@@ -111,13 +135,19 @@ class Board extends Component {
             />
             <RemainingTasks tasks={this.state.remainingTasks} />
           </div>
-          <DndProvider backend={HTML5Backend}>
-            <Tasks
-              unmountComponent={this.removeTask}
-              checked={this.checked}
-              entries={this.state.tasks}
-            />
-          </DndProvider>
+          <DragDropContext id={this.props.id} onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  <Tasks
+                    unmountComponent={this.removeTask}
+                    checked={this.checked}
+                    entries={this.state.tasks}
+                  />
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
           {/* Footeri */}
         </div>
         <div className={style.expandedDiv}>

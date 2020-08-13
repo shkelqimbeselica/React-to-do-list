@@ -5,7 +5,6 @@ const Plus = (props) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        // xmlns:xlink="http://www.w3.org/1999/xlink"
         version="1.1"
         id="Capa_1"
         x="0px"
@@ -25,7 +24,7 @@ const Plus = (props) => {
               <path
                 d="M492,236H276V20c0-11.046-8.954-20-20-20c-11.046,0-20,8.954-20,20v216H20c-11.046,0-20,8.954-20,20s8.954,20,20,20h216    v216c0,11.046,8.954,20,20,20s20-8.954,20-20V276h216c11.046,0,20-8.954,20-20C512,244.954,503.046,236,492,236z"
                 data-original="#000000"
-                class="active-path"
+                className="active-path"
                 data-old_color="#000000"
                 fill="#000000"
               />
@@ -58,7 +57,7 @@ const Plus = (props) => {
             <path
               d="M492,236H276V20c0-11.046-8.954-20-20-20c-11.046,0-20,8.954-20,20v216H20c-11.046,0-20,8.954-20,20s8.954,20,20,20h216    v216c0,11.046,8.954,20,20,20s20-8.954,20-20V276h216c11.046,0,20-8.954,20-20C512,244.954,503.046,236,492,236z"
               data-original="#000000"
-              class="active-path"
+              className="active-path"
               data-old_color="#000000"
               fill="#FFFFFF"
             />

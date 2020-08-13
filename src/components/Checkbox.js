@@ -4,9 +4,9 @@ import "./Task.css";
 const Checkbox = (props) => {
   return (
     <div>
-      <div class="cbx">
+      <div className="cbx">
         <input id="cbx" type="checkbox" onChange={props.onChange} />
-        <label for="cbx"></label>
+        <label htmlFor="cbx"></label>
         <svg width="24" height="24" viewbox="0 0 15 14" fill="none">
           <path d="M2 8.36364L6.23077 12L13 2"></path>
         </svg>
@@ -20,7 +20,7 @@ const Checkbox = (props) => {
           <filter id="goo">
             <fegaussianblur
               in="SourceGraphic"
-              stddeviation="4"
+              stdDeviation="4"
               result="blur"
             ></fegaussianblur>
             <fecolormatrix

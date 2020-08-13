@@ -1,74 +1,75 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { Task } from "./Task";
-import update from "immutability-helper";
+import React, { Component } from "react";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from "react-sortable-hoc";
+
+import Task from "./Task";
 import styles from "./Board.module.css";
+import { Draggable } from "react-beautiful-dnd";
 
-export const Tasks = (props) => {
-  {
-    const [Tasks, setTasks] = useState([props.entries]);
+class Tasks extends Component {
+  constructor(props) {
+    super(props);
 
-    useEffect(() => {
-      setTasks(props.entries);
-    }, [props]);
-
-    const moveTask = useCallback(
-      (dragIndex, hoverIndex) => {
-        // console.log(dragIndex, hoverIndex);
-
-        const dragCard = Tasks[dragIndex];
-        console.log("dragCard: ", dragCard);
-        console.log("Tasks: ", Tasks);
-
-        setTasks(
-          update(Tasks, {
-            $splice: [
-              [dragIndex, 1],
-              [hoverIndex, 0, dragCard],
-            ],
-          })
-        );
-      },
-      [Tasks]
-    );
-
-    const checked = (bool) => {
-      if (bool) {
-        // useCallback(
-        //   (dragIndex, hoverIndex) => {
-        //     const dragCard = Tasks[dragIndex];
-        //     setTasks(
-        //       update(Tasks, {
-        //         $splice: [
-        //           [dragIndex, 1],
-        //           [hoverIndex, 0, dragCard],
-        //         ],
-        //       })
-        //     );
-        //   },
-        //   [Tasks]
-        // );
-      }
-    };
-
-    const renderCard = (task, index) => {
-      return (
-        <Task
-          key={task.id}
-          index={index}
-          id={task.id}
-          text={task.text}
-          moveCard={moveTask}
-          unmountComponent={props.unmountComponent}
-          checked={checked}
-        />
-      );
-    };
-    return (
-      <>
-        <div className={styles.taskHolder}>
-          {Tasks.map((task, i) => renderCard(task, i))}
-        </div>
-      </>
-    );
+    this.grid = 8;
   }
-};
+
+  unmountComponent = (task) => {
+    this.props.unmountComponent(task);
+  };
+
+  getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    // padding: this.grid * 2,
+    margin: `0 0 ${this.grid * 2}px 0`,
+
+    // change background colour if dragging
+    // background: isDragging ? "lightgreen" : "grey",
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
+
+  checked = (obj) => {
+    console.log(obj.target.closest(".task"));
+
+    this.props.checked(obj.checked);
+  };
+
+  render() {
+    var todoEntries = this.props.entries;
+    var listItems = todoEntries.map((item, index) => {
+      return (
+        <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+          {(provided, snapshot) => {
+            return (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                style={this.getItemStyle(
+                  snapshot.isDragging,
+                  provided.draggableProps.style
+                )}
+              >
+                <Task
+                  key={item.key}
+                  unmountComponent={this.unmountComponent}
+                  checked={this.checked}
+                  title={item.text}
+                />
+              </div>
+            );
+          }}
+        </Draggable>
+      );
+    });
+
+    return <div className={styles.taskHolder}>{listItems}</div>;
+  }
+}
+
+export default Tasks;
