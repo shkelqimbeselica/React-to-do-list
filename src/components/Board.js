@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Task from "./Task";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import RemainingTasks from "./RemainingTasks";
 import Tasks from "./Tasks";
 import Plus from "./Plus";
@@ -107,11 +108,13 @@ class Board extends Component {
             />
             <RemainingTasks tasks={this.state.remainingTasks} />
           </div>
+          {/* <DndProvider backend={HTML5Backend}> */}
           <Tasks
             unmountComponent={this.removeTask}
             checked={this.checked}
             entries={this.state.tasks}
           />
+          {/* </DndProvider> */}
           {/* Footeri */}
         </div>
         <div className={style.expandedDiv}>
@@ -131,16 +134,6 @@ class Board extends Component {
             className={style.floatingActionButton}
             onClick={this.handleFABclick}
           >
-            {/* <img
-              style={{
-                right: "16px",
-                bottom: "16px",
-                transition: "all 250ms ease-in-out",
-              }}
-              src="/Images/plus.png"
-              width="26px"
-              height="26px"
-            /> */}
             <Plus color="white" height="26px" width="26px" />
           </div>
           <div className={style.title} style={styles.newTask}></div>

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove,
-} from "react-sortable-hoc";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import Checkbox from "./Checkbox";
 import "./Task.css";
@@ -70,47 +67,53 @@ class Task extends Component {
     );
 
     return (
-      <div className="task" style={style.main} ref={this.taskRef}>
-        {/* <input type="checkbox" onChange={this.handleCheckboxChange} /> */}
+      <DndProvider backend={HTML5Backend}>
+        <div className="task" style={style.main} ref={this.taskRef}>
+          {/* <input type="checkbox" onChange={this.handleCheckboxChange} /> */}
 
-        <Checkbox
-          checked={this.state.checked}
-          onChange={this.handleCheckboxChange}
-        />
+          <Checkbox
+            checked={this.state.checked}
+            onChange={this.handleCheckboxChange}
+          />
 
-        <div className="title" style={style.title}>
-          <div className="fill-line-through">
-            <div className="line" ref={this.lineRef}></div>
+          <div className="title" style={style.title}>
+            <div className="fill-line-through">
+              <div className="line" ref={this.lineRef}></div>
+            </div>
+            {this.props.title}
           </div>
-          {this.props.title}
-        </div>
-        <div
-          className="delete"
-          style={{ marginLeft: "auto", marginRight: "16px", cursor: "pointer" }}
-        >
           <div
-            style={style.moreOptions}
-            className="more-options"
-            onClick={this.handleDropdown}
+            className="delete"
+            style={{
+              marginLeft: "auto",
+              marginRight: "16px",
+              cursor: "pointer",
+            }}
           >
-            <svg
-              style={{ width: "16px" }}
-              id="Capa_1"
-              enableBackground="new 0 0 515.555 515.555"
-              // height="512"
-              viewBox="0 0 515.555 515.555"
-              // width="512"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              style={style.moreOptions}
+              className="more-options"
+              onClick={this.handleDropdown}
             >
-              <path d="m303.347 18.875c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
-              <path d="m303.347 212.209c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
-              <path d="m303.347 405.541c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
-            </svg>
+              <svg
+                style={{ width: "16px" }}
+                id="Capa_1"
+                enableBackground="new 0 0 515.555 515.555"
+                // height="512"
+                viewBox="0 0 515.555 515.555"
+                // width="512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="m303.347 18.875c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
+                <path d="m303.347 212.209c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
+                <path d="m303.347 405.541c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
+              </svg>
 
-            {this.state.dropdown ? dropdown : null}
+              {this.state.dropdown ? dropdown : null}
+            </div>
           </div>
         </div>
-      </div>
+      </DndProvider>
     );
   }
 }
