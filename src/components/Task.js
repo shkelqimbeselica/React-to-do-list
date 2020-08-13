@@ -48,20 +48,24 @@ class Task extends Component {
   deleteTask = (e) => {
     let task = this.taskRef.current;
     task.classList.remove("new-task-added");
+
+    console.log("TASK: ", task);
+
     setTimeout(() => {
       this.props.unmountComponent(this.taskRef.current);
     }, 400);
   };
 
-  pinTask = (e) => {
-    console.log(e);
-  };
+  // pinTask = (e) => {
+  //   this.props.pinTask(e);
+  // };
 
   render() {
     let dropdown = (
       <div style={style.dropdown}>
-        <div onClick={this.deleteTask}>Delete</div>
-        <div onClick={this.pinTask}>Pin</div>
+        <div onClick={this.deleteTask} style={style.dropdownbtn}>
+          Delete
+        </div>
       </div>
     );
 
@@ -151,6 +155,12 @@ const style = {
     border: "2px solid #FFF",
     borderRadius: "8px",
     zIndex: 2,
+  },
+  dropdownbtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "8px",
   },
 };
 

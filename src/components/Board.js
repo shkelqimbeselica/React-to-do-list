@@ -46,22 +46,21 @@ class Board extends Component {
 
   findInTasks = (target) => {
     let tasks = this.state.tasks;
-    let inputVal = obj.target.closest(".task").children[1].textContent;
-
-    var array = [...this.state.tasks]; // make a separate copy of the array
-    let index = tasks.findIndex((x) => x.text === inputVal);
-  };
-
-  removeTask = (target) => {
-    if (!target.classList.contains("done")) {
-      this.checked(true);
-    }
-
-    let tasks = this.state.tasks;
     let inputVal = target.children[1].textContent;
 
     var array = [...this.state.tasks]; // make a separate copy of the array
     let index = tasks.findIndex((x) => x.text === inputVal);
+
+    return { array: array, index: index };
+  };
+
+  removeTask = (target) => {
+    if (!target.classList.contains("done")) {
+      this.checked({ checked: true });
+    }
+
+    let array = this.findInTasks(target).array;
+    let index = this.findInTasks(target).index;
 
     if (index !== -1) {
       array.splice(index, 1);
@@ -70,22 +69,26 @@ class Board extends Component {
   };
 
   checked = (obj) => {
-    let tasks = this.state.tasks;
-    let inputVal = obj.target.closest(".task").children[1].textContent;
-
-    var array = [...this.state.tasks]; // make a separate copy of the array
-    let index = tasks.findIndex((x) => x.text === inputVal);
-
-    if (index !== -1) {
-      const tasks = this.reorder(
-        this.state.tasks,
-        index,
-        this.state.tasks.length - 1
-      );
-      this.setState({ tasks });
-    }
+    let array =
+      obj.target !== undefined
+        ? this.findInTasks(obj.target.closest(".task")).array
+        : null;
+    let index =
+      obj.target !== undefined
+        ? this.findInTasks(obj.target.closest(".task")).index
+        : null;
 
     if (obj.checked) {
+      if (index !== -1) {
+        const tasks = this.reorder(
+          this.state.tasks,
+          index,
+          this.state.tasks.length - 1
+        );
+        this.setState({ tasks });
+
+        // Needs fixing
+      }
       this.setState((prevState) => {
         return {
           remainingTasks: prevState.remainingTasks - 1,
@@ -117,10 +120,6 @@ class Board extends Component {
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
-    console.log("list", list);
-    console.log("startIndex", startIndex);
-    console.log("endIndex", endIndex);
-
     return result;
   };
 
@@ -140,6 +139,19 @@ class Board extends Component {
       tasks,
     });
   };
+
+  // pinTask = (e) => {
+  //   const task = e.target.closest(".task");
+  //   let array = this.findInTasks(task).array;
+  //   let index = this.findInTasks(task).index;
+
+  //   task.style.pointerEvents = "none";
+
+  //   if (index !== -1) {
+  //     const tasks = this.reorder(this.state.tasks, index, 0);
+  //     this.setState({ tasks });
+  //   }
+  // };
 
   render() {
     return (
@@ -168,6 +180,7 @@ class Board extends Component {
                   <Tasks
                     unmountComponent={this.removeTask}
                     checked={this.checked}
+                    pinTask={this.pinTask}
                     entries={this.state.tasks}
                   />
                 </div>

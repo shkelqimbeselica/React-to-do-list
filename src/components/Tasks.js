@@ -13,12 +13,10 @@ class Tasks extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { isDragDisabled: false };
+
     this.grid = 8;
   }
-
-  unmountComponent = (task) => {
-    this.props.unmountComponent(task);
-  };
 
   getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -34,15 +32,23 @@ class Tasks extends Component {
     ...draggableStyle,
   });
 
-  checked = (obj) => {
-    this.props.checked(obj);
-  };
+  // pinTask = (e) => {
+  //   this.props.pinTask(e);
+
+  //   this.setState({ isDragDisabled: !this.state.isDragDisabled }, () => {});
+  // };
 
   render() {
     var todoEntries = this.props.entries;
     var listItems = todoEntries.map((item, index) => {
       return (
-        <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+        <Draggable
+          key={item.id}
+          draggableId={item.id.toString()}
+          ref={this.draggableRef}
+          isDragDisabled={this.state.isDragDisabled}
+          index={index}
+        >
           {(provided, snapshot) => {
             return (
               <div
@@ -56,8 +62,9 @@ class Tasks extends Component {
               >
                 <Task
                   key={item.key}
-                  unmountComponent={this.unmountComponent}
-                  checked={this.checked}
+                  unmountComponent={this.props.unmountComponent}
+                  // pinTask={this.pinTask}
+                  checked={this.props.checked}
                   title={item.text}
                 />
               </div>
