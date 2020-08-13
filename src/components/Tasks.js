@@ -1,33 +1,48 @@
-import React, { Component } from "react";
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove,
-} from "react-sortable-hoc";
+import React, { useState, useCallback, useEffect } from "react";
+import { Task } from "./Task";
+import update from "immutability-helper";
 
-import Task from "./Task";
-import styles from "./Board.module.css";
+const style = {
+  width: 400,
+};
 
-class Tasks extends Component {
-  unmountComponent = (task) => {
-    this.props.unmountComponent(task);
-  };
+export const Tasks = (props) => {
+  {
+    const [Tasks, setTasks] = useState([props.entries]);
 
-  render() {
-    var todoEntries = this.props.entries;
-    var listItems = todoEntries.map((task) => {
+    useEffect(() => {
+      setTasks(props.entries);
+    }, [props]);
+
+    const moveTask = useCallback(
+      (dragIndex, hoverIndex) => {
+        const dragCard = Tasks[dragIndex];
+        setTasks(
+          update(Tasks, {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, dragCard],
+            ],
+          })
+        );
+      },
+      [Tasks]
+    );
+    const renderCard = (card, index) => {
       return (
         <Task
-          key={task.key}
-          unmountComponent={this.unmountComponent}
-          checked={this.props.checked}
-          title={task.text}
+          key={card.id}
+          index={index}
+          id={card.id}
+          text={card.text}
+          moveCard={moveTask}
         />
       );
-    });
-
-    return <div className={styles.taskHolder}>{listItems}</div>;
+    };
+    return (
+      <>
+        <div style={style}>{Tasks.map((task, i) => renderCard(task, i))}</div>
+      </>
+    );
   }
-}
-
-export default Tasks;
+};

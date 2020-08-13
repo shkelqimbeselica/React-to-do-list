@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Tasks } from "./Tasks";
 import RemainingTasks from "./RemainingTasks";
-import Tasks from "./Tasks";
 import Plus from "./Plus";
 import style from "./Board.module.css";
 import "./Board.css";
@@ -16,6 +16,7 @@ class Board extends Component {
       taskTitle: "",
       tasks: [],
       remainingTasks: 0,
+      id: 0,
     };
 
     this.taskTitle = "";
@@ -32,11 +33,13 @@ class Board extends Component {
         text: e.target.value,
         key: Date.now(),
         checked: this.props.checked,
+        id: this.state.id + 1,
       };
 
       this.setState((prevState) => {
         return {
           task: "",
+          id: prevState.id + 1,
           tasks: prevState.tasks.concat(newItem),
           remainingTasks: prevState.remainingTasks + 1,
         };
@@ -108,13 +111,13 @@ class Board extends Component {
             />
             <RemainingTasks tasks={this.state.remainingTasks} />
           </div>
-          {/* <DndProvider backend={HTML5Backend}> */}
-          <Tasks
-            unmountComponent={this.removeTask}
-            checked={this.checked}
-            entries={this.state.tasks}
-          />
-          {/* </DndProvider> */}
+          <DndProvider backend={HTML5Backend}>
+            <Tasks
+              unmountComponent={this.removeTask}
+              checked={this.checked}
+              entries={this.state.tasks}
+            />
+          </DndProvider>
           {/* Footeri */}
         </div>
         <div className={style.expandedDiv}>
