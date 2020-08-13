@@ -1,6 +1,6 @@
 .new-task-added {
   left: 0 !important;
-  transition: 400ms ease-in-out;
+  transition: left 400ms ease-in-out;
 }
 
 .fill-line-through {
@@ -8,6 +8,11 @@
   width: 0;
   background-color: transparent;
 }
+
+.over {
+  border: 3px dotted #666;
+}
+
 .line {
   width: 0%;
   transition: 300ms ease-in-out;
