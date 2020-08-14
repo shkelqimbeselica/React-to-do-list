@@ -53,12 +53,6 @@ class Signup extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((result) => {
-        let user = result.user;
-
-        console.log(user);
-
-        this.writeUserData(user.uid, this.state.name, user.email);
-
         return result.user.updateProfile({
           displayName: this.state.name,
         });

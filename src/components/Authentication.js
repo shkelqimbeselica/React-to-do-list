@@ -18,7 +18,7 @@ class Authentication extends Component {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         const username = user.displayName;
-        this.setState({ user, username: username });
+        this.setState({ user, username });
       } else {
         this.setState({ user: null });
       }
@@ -28,7 +28,11 @@ class Authentication extends Component {
   render() {
     return (
       <div style={{ height: "100%" }}>
-        {this.state.user ? <Home username={this.state.username} /> : <Entry />}
+        {this.state.user ? (
+          <Home user={this.state.user} username={this.state.username} />
+        ) : (
+          <Entry />
+        )}
       </div>
     );
   }

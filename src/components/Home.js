@@ -4,11 +4,13 @@ import Header from "../components/Header";
 import Modal from "../components/Modal";
 import CreateBoard from "./CreateBoard";
 
+import fire, { database } from "../config/Firebase";
+
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { boards: [0], showModal: false };
+    this.state = { boards: [0], showModal: false, user: null };
     this.boardsRef = React.createRef();
     this.containerRef = React.createRef();
   }
@@ -18,6 +20,48 @@ class Home extends Component {
       this.containerRef.current.style.filter = "blur(8px)";
     });
   };
+
+  getNumberOfBoards = () => {
+    var userId = fire.auth().currentUser.uid;
+    return fire
+      .database()
+      .ref("/users/" + userId)
+      .once("value")
+      .then(function (snapshot) {
+        const boards = snapshot.val().numberOfBoards;
+        console.log("num of boards: ", boards);
+
+        return boards;
+      });
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props !== prevProps) {
+      this.setState({ user: this.props.user });
+    }
+    // this.setState(prevState => ({ boards: prevState.boards }, () => {
+    //   console.log(this.state.boards);
+    // }));
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.getNumberOfBoards().then((res) => {
+        console.log("res: ", res);
+        console.log(this.state.boards);
+        for (let i = 1; i < res; i++) {
+          this.setState(
+            (prevState) => {
+              return {
+                boards: prevState.boards.concat(i),
+              };
+            },
+            () => {}
+          );
+        }
+      });
+    }, 5000); // QITU KAM MBET
+  }
 
   handleModalClick = (obj) => {
     this.containerRef.current.style.filter = "blur(0px)";
@@ -61,6 +105,8 @@ class Home extends Component {
               {this.state.boards.map((board, index) => {
                 return (
                   <Board
+                    user={this.state.user}
+                    numberOfBoards={this.state.boards.length}
                     key={index}
                     title={this.state.boardTitle}
                     id={Date.now()}
