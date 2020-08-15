@@ -25,7 +25,8 @@ const style = {
     alignItems: "center",
   },
   bgTasks: {
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
+    fontWeight: "bold",
     marginLeft: "8px",
     height: "24px",
     width: "24px",

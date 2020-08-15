@@ -93,7 +93,7 @@ const style = {
   },
   currentLists: {
     color: "#2F313D",
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
     fontSize: "32px",
   },
   button: {

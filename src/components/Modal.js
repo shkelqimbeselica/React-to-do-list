@@ -104,7 +104,7 @@ const style = {
   },
   button: {
     cursor: "pointer",
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
     fontSize: "20px",
     outline: "none",
     border: "none",
@@ -114,7 +114,7 @@ const style = {
     backgroundColor: "#7482D3",
   },
   heading: {
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
     fontSize: "24px",
     marginBottom: "8px",
   },

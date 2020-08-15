@@ -20,7 +20,7 @@ class CreateBoard extends Component {
 const styles = {
   paragraph: {
     marginLeft: "8px",
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
     fontSize: "20px",
     height: "100%",
     display: "flex",

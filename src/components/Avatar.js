@@ -20,7 +20,7 @@ class Avatar extends Component {
 const style = {
   title: {
     fontSize: "24px",
-    fontFamily: "Source Sans Pro Bold",
+    fontFamily: "Source Sans Pro",
     color: "#5160B8",
   },
   right: { marginRight: "32px", display: "flex", cursor: "pointer" },
