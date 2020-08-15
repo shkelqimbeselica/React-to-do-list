@@ -1,38 +1,17 @@
 import React, { Component } from "react";
-import fire from "../config/Firebase";
-
 import Home from "./Home";
-import Entry from "./Entry";
+import "./Authentication.css";
 
 class Authentication extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: {}, username: "" };
+    this.state = {};
   }
-
-  componentDidMount() {
-    this.handleAuthentication();
-  }
-
-  handleAuthentication = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const username = user.displayName;
-        this.setState({ user, username });
-      } else {
-        this.setState({ user: null });
-      }
-    });
-  };
 
   render() {
     return (
       <div style={{ height: "100%" }}>
-        {this.state.user ? (
-          <Home user={this.state.user} username={this.state.username} />
-        ) : (
-          <Entry />
-        )}
+        <Home />
       </div>
     );
   }

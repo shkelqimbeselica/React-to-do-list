@@ -13,7 +13,7 @@ class Tasks extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isDragDisabled: false };
+    this.state = {};
 
     this.grid = 8;
   }
@@ -23,11 +23,10 @@ class Tasks extends Component {
     userSelect: "none",
     // padding: this.grid * 2,
     margin: `0 0 ${this.grid * 2}px 0`,
-    transform: isDragging ? "rotate(7deg)" : "none",
 
-    // change background colour if dragging
-    // background: isDragging ? "lightgreen" : "grey",
-
+    // boxShadow: isDragging ? "0px 2px 5px -5px" : null,
+    // transition: "all 200ms ease-in-out",
+    // borderRadius: "8px",
     // styles we need to apply on draggables
     ...draggableStyle,
   });

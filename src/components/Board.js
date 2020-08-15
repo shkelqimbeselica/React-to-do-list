@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import fire, { database } from "../config/Firebase";
-
 import Tasks from "./Tasks";
 import RemainingTasks from "./RemainingTasks";
 import Plus from "./Plus";
@@ -26,30 +24,6 @@ class Board extends Component {
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  componentDidMount() {
-    this.handleAuthentication();
-  }
-
-  handleAuthentication = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const username = user.displayName;
-        this.setState({ user, username }, () => {
-          fire
-            .database()
-            .ref("users/" + this.state.user.uid)
-            .set({
-              uid: this.state.user.uid,
-              username: this.state.username,
-              numberOfBoards: this.props.numberOfBoards,
-            });
-        });
-      } else {
-        this.setState({ user: null });
-      }
-    });
   };
 
   handleEnter = (e) => {
@@ -106,12 +80,14 @@ class Board extends Component {
 
     if (obj.checked) {
       if (index !== -1) {
-        const tasks = this.reorder(
-          this.state.tasks,
-          index,
-          this.state.tasks.length - 1
-        );
-        this.setState({ tasks });
+        setTimeout(() => {
+          const tasks = this.reorder(
+            this.state.tasks,
+            index,
+            this.state.tasks.length - 1
+          );
+          this.setState({ tasks });
+        }, 500);
 
         // Needs fixing
       }

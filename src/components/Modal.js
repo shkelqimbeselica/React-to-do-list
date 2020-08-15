@@ -28,6 +28,15 @@ class Modal extends Component {
             placeholder="Name of list"
             style={style.input}
             value={this.state.value}
+            action="create"
+            onKeyUp={(e) => {
+              if (e.keyCode === 13) {
+                this.props.handleModalClick({
+                  value: this.state.value,
+                  action: e.currentTarget.getAttribute("action"),
+                });
+              }
+            }}
             onChange={(e) => this.setState({ value: e.target.value })}
           />
           <div className="actions" style={style.actions}>

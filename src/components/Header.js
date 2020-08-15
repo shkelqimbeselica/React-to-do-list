@@ -12,6 +12,7 @@ const Header = (props) => {
 const style = {
   header: {
     width: "calc(100% - 16px)",
+    maxWidth: "1280px",
     margin: "0 auto",
     display: "flex",
     justifyContent: "flex-end",

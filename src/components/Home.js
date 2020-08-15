@@ -3,9 +3,6 @@ import Board from "../components/Board";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
 import CreateBoard from "./CreateBoard";
-
-import fire, { database } from "../config/Firebase";
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -20,48 +17,6 @@ class Home extends Component {
       this.containerRef.current.style.filter = "blur(8px)";
     });
   };
-
-  getNumberOfBoards = () => {
-    var userId = fire.auth().currentUser.uid;
-    return fire
-      .database()
-      .ref("/users/" + userId)
-      .once("value")
-      .then(function (snapshot) {
-        const boards = snapshot.val().numberOfBoards;
-        console.log("num of boards: ", boards);
-
-        return boards;
-      });
-  };
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props !== prevProps) {
-      this.setState({ user: this.props.user });
-    }
-    // this.setState(prevState => ({ boards: prevState.boards }, () => {
-    //   console.log(this.state.boards);
-    // }));
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.getNumberOfBoards().then((res) => {
-        console.log("res: ", res);
-        console.log(this.state.boards);
-        for (let i = 1; i < res; i++) {
-          this.setState(
-            (prevState) => {
-              return {
-                boards: prevState.boards.concat(i),
-              };
-            },
-            () => {}
-          );
-        }
-      });
-    }, 5000); // QITU KAM MBET
-  }
 
   handleModalClick = (obj) => {
     this.containerRef.current.style.filter = "blur(0px)";
@@ -99,8 +54,7 @@ class Home extends Component {
             <h3 style={style.currentLists}>Current lists</h3>
             <CreateBoard addBoard={this.addBoard} />
           </div>
-
-          <div className="scrollable">
+          <div className="scrollable" style={style.scrollable}>
             <div className="boards" ref={this.boardsRef} style={style.boards}>
               {this.state.boards.map((board, index) => {
                 return (
@@ -133,6 +87,7 @@ const style = {
     display: "flex",
     alignItems: "center",
     width: "calc(100% - 80px)",
+    maxWidth: "1280px",
     margin: "auto",
     marginTop: "8px",
   },
@@ -158,12 +113,17 @@ const style = {
   },
   boards: {
     height: "calc(100vh - 174px)",
-    width: "calc(100% - 32px)",
+    // width: "calc(100% - 32px)",
     margin: "auto",
     display: "flex",
     alignItems: "flex-start",
-    overflowX: "scroll",
+    // overflowX: "scroll",
     whiteSpace: "nowrap",
+  },
+  scrollable: {
+    overflowX: "scroll",
+    maxWidth: "1280px",
+    margin: "auto",
   },
 };
 
